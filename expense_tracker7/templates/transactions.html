@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Transactions{% endblock %}
+{% block content %}
+<section class="page-heading heading-row">
+  <div><span class="eyebrow">YOUR MONEY, YOUR WAY</span><h1>Transactions</h1><p class="muted">Everything coming in and going out, all in one place.</p></div>
+  <a class="button button-primary" href="{{ url_for('transactions.add_transaction') }}">＋ Add transaction</a>
+</section>
+<section class="panel transactions-panel">
+  <form class="filter-bar" method="get">
+    <label class="search-field"><span aria-hidden="true">⌕</span><input type="search" name="q" value="{{ search }}" placeholder="Search transactions..." aria-label="Search transactions"></label>
+    <select name="kind" aria-label="Filter by type"><option value="">All types</option><option value="income" {{ 'selected' if selected_kind == 'income' else '' }}>Income</option><option value="expense" {{ 'selected' if selected_kind == 'expense' else '' }}>Expense</option></select>
+    <select name="category" aria-label="Filter by category"><option value="">All categories</option>{% for category in categories %}<option value="{{ category }}" {{ 'selected' if selected_category == category else '' }}>{{ category }}</option>{% endfor %}</select>
+    <input type="month" name="month" value="{{ selected_month }}" aria-label="Filter by month">
+    <button class="button button-dark button-small" type="submit">Filter</button>
+    {% if search or selected_kind or selected_category or selected_month %}<a class="clear-filters" href="{{ url_for('transactions.transaction_list') }}">Clear</a>{% endif %}
+  </form>
+  {% if transactions %}
+  <div class="table-wrap">
+    <table><thead><tr><th>TRANSACTION</th><th>CATEGORY</th><th>DATE</th><th>TYPE</th><th class="align-right">AMOUNT</th><th><span class="sr-only">Actions</span></th></tr></thead>
+    <tbody>{% for item in transactions %}
+      <tr>
+        <td><div class="table-title"><span class="category-badge badge-{{ item['category']|lower }}">{{ item["category"][0] }}</span><strong>{{ item["description"] }}</strong></div></td>
+        <td><span class="category-pill">{{ item["category"] }}</span></td><td class="muted-cell">{{ item["transaction_date"] }}</td>
+        <td><span class="type-tag {{ 'tag-income' if item['kind'] == 'income' else 'tag-expense' }}">{{ item["kind"]|capitalize }}</span></td>
+        <td class="align-right amount-cell {{ 'amount-income' if item['kind'] == 'income' else 'amount-expense' }}">{{ '+' if item["kind"] == 'income' else '−' }}{{ '%.2f'|format(item["amount"] / 100) }}</td>
+        <td><div class="row-actions"><a href="{{ url_for('transactions.edit_transaction', transaction_id=item['id']) }}" aria-label="Edit {{ item['description'] }}">Edit</a><form method="post" action="{{ url_for('transactions.delete_transaction', transaction_id=item['id']) }}" data-confirm="Delete this transaction? This cannot be undone."><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit" class="delete-link" aria-label="Delete {{ item['description'] }}">Delete</button></form></div></td>
+      </tr>
+    {% endfor %}</tbody></table>
+  </div>
+  <div class="table-footer">{{ transactions|length }} transaction{{ '' if transactions|length == 1 else 's' }} found</div>
+  {% else %}
+    <div class="empty-state large-empty"><span>⌕</span><h2>No transactions found</h2><p>{% if search or selected_kind or selected_category or selected_month %}Try changing your search or filters.{% else %}Add your first transaction to begin tracking.{% endif %}</p>{% if not (search or selected_kind or selected_category or selected_month) %}<a class="button button-primary button-small" href="{{ url_for('transactions.add_transaction') }}">Add transaction</a>{% endif %}</div>
+  {% endif %}
+</section>
+{% endblock %}
