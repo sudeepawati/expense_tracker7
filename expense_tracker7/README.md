@@ -1,1 +1,2 @@
-Project status: Starting
+Project status: Main Project
+setup completed
