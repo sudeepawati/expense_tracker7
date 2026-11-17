@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Expense Tracker
 
 A beginner-friendly expense tracker built with Flask, SQLite, HTML, CSS, and JavaScript. It supports account registration, private transaction records, search and filters, a dashboard, and monthly reports with charts.
@@ -98,3 +99,6 @@ Replace the remote URL with your own. The local database, virtual environment, a
 5. **Templates and static files** — render the pages (`templates/`), apply responsive styling (`static/css/`), and enhance the interface (`static/js/`).
 
 For a real public deployment, configure a strong secret key, use HTTPS, and choose a production-ready hosting setup.
+=======
+# expense_tracker7
+>>>>>>> b962b1639776b2e1462e1fba5f0cce48031579c9
