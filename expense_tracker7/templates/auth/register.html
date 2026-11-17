@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Create account{% endblock %}
+{% block content %}
+<section class="auth-wrap">
+  <div class="auth-card">
+    <span class="eyebrow">GET STARTED</span>
+    <h1>Create your account</h1>
+    <p class="muted">A clearer view of your money starts here.</p>
+    <form method="post" class="form-stack">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Username<input name="username" value="{{ username or '' }}" required minlength="3" maxlength="30" autocomplete="username" placeholder="e.g. alex_m"></label>
+      <label>Email address<input name="email" type="email" value="{{ email or '' }}" required maxlength="254" autocomplete="email" placeholder="you@example.com"></label>
+      <label>Password<input name="password" type="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters"></label>
+      <button class="button button-primary button-wide" type="submit">Create account <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="auth-switch">Already have an account? <a href="{{ url_for('auth.login') }}">Log in</a></p>
+  </div>
+  <div class="auth-aside"><span class="aside-mark">“</span><p>Small steps add up. Give every dollar a little more direction.</p><span class="aside-caption">YOUR PERSONAL MONEY SPACE</span></div>
+</section>
+{% endblock %}

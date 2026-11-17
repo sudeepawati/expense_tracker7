@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Your money, in focus{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow"><span class="status-dot"></span> A calmer way to manage money</span>
+    <h1>Make room for<br><span>what matters.</span></h1>
+    <p class="hero-text">Know where your money goes, see the bigger picture, and make your next move with confidence.</p>
+    <div class="hero-buttons">
+      <a class="button button-primary" href="{{ url_for('auth.register') }}">Create your free account <span aria-hidden="true">→</span></a>
+      <a class="text-link" href="{{ url_for('auth.login') }}">I already have an account</a>
+    </div>
+    <div class="trust-note"><span class="check-mark">✓</span> Private by design · Your data stays yours</div>
+  </div>
+  <div class="hero-preview" aria-label="Example spending summary">
+    <div class="preview-card preview-main">
+      <div class="preview-top"><span class="preview-label">Total balance</span><span class="dots">•••</span></div>
+      <div class="preview-balance">$4,280.50</div>
+      <div class="preview-change"><span>↗ 12.8%</span> <span>vs. last month</span></div>
+      <div class="preview-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="preview-months"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+    </div>
+    <div class="preview-card preview-spend"><span class="spend-icon">↘</span><div><span class="preview-label">This month spent</span><strong>$1,240.00</strong></div><span class="spend-pill">On track</span></div>
+    <div class="float-sparkle">✳</div>
+  </div>
+</section>
+<section class="landing-bottom">
+  <div><span class="landing-icon">⌁</span><strong>See the whole story</strong><span>Income, spending, and balance at a glance.</span></div>
+  <div><span class="landing-icon">◷</span><strong>Find your patterns</strong><span>Monthly reports make progress visible.</span></div>
+  <div><span class="landing-icon">⌕</span><strong>Stay in control</strong><span>Search and filter whenever you need.</span></div>
+</section>
+{% endblock %}

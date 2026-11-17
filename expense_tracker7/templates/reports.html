@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Monthly reports{% endblock %}
+{% block head %}<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>{% endblock %}
+{% block content %}
+<section class="page-heading heading-row">
+  <div><span class="eyebrow">ZOOM OUT, SEE THE PATTERNS</span><h1>Monthly report</h1><p class="muted">A little context can make a big difference.</p></div>
+  <form class="month-picker" method="get"><label for="report-month">Choose a month</label><input id="report-month" type="month" name="month" value="{{ selected_month }}"><button class="button button-dark button-small" type="submit">View</button></form>
+</section>
+<section class="stat-grid report-stats">
+  <article class="stat-card"><div class="stat-label"><span class="stat-icon income-icon">↗</span> Income</div><div class="stat-value">{{ '%.2f'|format(income) }}<small> USD</small></div></article>
+  <article class="stat-card"><div class="stat-label"><span class="stat-icon expense-icon">↘</span> Expenses</div><div class="stat-value">{{ '%.2f'|format(expenses) }}<small> USD</small></div></article>
+  <article class="stat-card balance-card"><div class="stat-label"><span class="stat-icon balance-icon">◈</span> Net balance</div><div class="stat-value">{{ '%.2f'|format(balance) }}<small> USD</small></div></article>
+</section>
+<section class="report-grid">
+  <article class="panel report-panel"><div class="panel-heading"><div><span class="eyebrow">WHERE IT WENT</span><h2>Spending by category</h2></div></div>
+    {% if category_labels %}<div class="report-chart"><canvas id="categoryChart" aria-label="Expense totals by category"></canvas></div>{% else %}<div class="empty-chart"><span>◷</span><strong>No spending to report</strong><p>There are no expenses for {{ selected_month }} yet.</p></div>{% endif %}
+  </article>
+  <article class="panel report-panel"><div class="panel-heading"><div><span class="eyebrow">DAY BY DAY</span><h2>Daily spending</h2></div></div>
+    {% if day_labels %}<div class="report-chart"><canvas id="dailyChart" aria-label="Daily expense totals"></canvas></div>{% else %}<div class="empty-chart"><span>◷</span><strong>A fresh month</strong><p>Daily expenses will appear here as you add them.</p></div>{% endif %}
+  </article>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+  window.pennywiseReport = {
+    categoryLabels: {{ category_labels|tojson }},
+    categoryValues: {{ category_values|tojson }},
+    dayLabels: {{ day_labels|tojson }},
+    dayValues: {{ day_values|tojson }}
+  };
+</script>
+{% endblock %}

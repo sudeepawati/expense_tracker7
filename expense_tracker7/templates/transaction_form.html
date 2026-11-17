@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block content %}
+<section class="page-heading"><a class="back-link" href="{{ url_for('transactions.transaction_list') }}">← Back to transactions</a><span class="eyebrow">KEEP IT UP TO DATE</span><h1>{{ page_title }}</h1><p class="muted">A few details are all it takes to keep your money picture clear.</p></section>
+<section class="panel form-panel">
+  <form method="post" class="form-stack transaction-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="field-row">
+      <label>Type<select name="kind" required><option value="expense" {{ 'selected' if transaction.get('kind', 'expense') == 'expense' else '' }}>Expense</option><option value="income" {{ 'selected' if transaction.get('kind') == 'income' else '' }}>Income</option></select></label>
+      <label>Amount (USD)<div class="amount-input"><span>$</span><input name="amount" type="number" step="0.01" min="0.01" max="999999999.99" value="{{ transaction.get('amount', '') }}" required placeholder="0.00"></div></label>
+    </div>
+    <div class="field-row">
+      <label>Category<select name="category" required>{% for category in categories %}<option value="{{ category }}" {{ 'selected' if transaction.get('category', 'Food') == category else '' }}>{{ category }}</option>{% endfor %}</select></label>
+      <label>Date<input name="transaction_date" type="date" value="{{ transaction.get('transaction_date', '') }}" required></label>
+    </div>
+    <label>Description<input name="description" value="{{ transaction.get('description', '') }}" maxlength="120" required placeholder="e.g. Weekly groceries"></label>
+    <div class="form-actions"><a class="button button-quiet" href="{{ url_for('transactions.transaction_list') }}">Cancel</a><button type="submit" class="button button-primary">{{ 'Save changes' if page_title == 'Edit transaction' else 'Add transaction' }} <span aria-hidden="true">→</span></button></div>
+  </form>
+</section>
+{% endblock %}

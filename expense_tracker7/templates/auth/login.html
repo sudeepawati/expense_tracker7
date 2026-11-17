@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+<section class="auth-wrap">
+  <div class="auth-card">
+    <span class="eyebrow">WELCOME BACK</span>
+    <h1>Good to see you.</h1>
+    <p class="muted">Log in to pick up where you left off.</p>
+    <form method="post" class="form-stack">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Email or username<input name="identity" value="{{ identity or '' }}" required autocomplete="username" placeholder="Enter your email or username"></label>
+      <label>Password<input name="password" type="password" required autocomplete="current-password" placeholder="Your password"></label>
+      <button class="button button-primary button-wide" type="submit">Log in <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="auth-switch">New to Pennywise? <a href="{{ url_for('auth.register') }}">Create an account</a></p>
+  </div>
+  <div class="auth-aside"><span class="aside-mark">✳</span><p>Progress isn't about perfection. It's about paying attention.</p><span class="aside-caption">YOUR PERSONAL MONEY SPACE</span></div>
+</section>
+{% endblock %}
