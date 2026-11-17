@@ -20,4 +20,3 @@ Each developer works on a separate feature branch.
 - Team Leader: Project setup and integration
 - Developer 2: Add Expense feature
 - Developer 3: View Expense feature
--
